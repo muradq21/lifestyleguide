@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - LifeStyle Guide</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header><h1>LifeStyle Guide</h1></header>
+    <nav><ul id="navList"></ul></nav>
+
+    <div class="container">
+        <h2 style="text-align:center; color:#667eea; font-size:2.5em;">Your Image Gallery</h2>
+        <p style="text-align:center; font-size:1.2em; color:#555;">All your uploads + recipe images in one place!</p>
+        
+        <div style="text-align:center; margin:30px 0;">
+            <input type="file" id="imageUpload" accept="image/*" style="padding:15px; font-size:1.1em;">
+            <p>Upload a new image</p>
+        </div>
+
+        <div class="grid" id="galleryGrid"></div>
+    </div>
+
+    <div class="overlay" id="overlay">
+        <div class="popup">
+            <span class="close" onclick="document.getElementById('overlay').style.display='none'">×</span>
+            <img id="popupImg" style="max-width:100%; border-radius:20px;">
+        </div>
+    </div>
+
+    <script>
+        const currentUser = localStorage.getItem('currentUser');
+        if (!currentUser) { alert('Login required!'); window.location.href = 'login.html'; }
+
+        function loadAllImages() {
+            const users = JSON.parse(localStorage.getItem('users'));
+            const user = users.find(u => u.username === currentUser);
+            const grid = document.getElementById('galleryGrid');
+            grid.innerHTML = '';
+
+            // Add uploaded images
+            user.savedImages.forEach(src => addImageCard(src, 'Your Upload'));
+            
+            // Add recipe images
+            user.savedRecipes.forEach(r => {
+                if (r.img) addImageCard(r.img, r.title);
+            });
+        }
+
+        function addImageCard(src, caption) {
+            const div = document.createElement('div');
+            div.className = 'card';
+            div.innerHTML = `
+                <img src="${src}" onclick="document.getElementById('popupImg').src='${src}'; document.getElementById('overlay').style.display='flex';">
+                <h3>${caption}</h3>
+            `;
+            document.getElementById('galleryGrid').appendChild(div);
+        }
+
+        document.getElementById('imageUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                const users = JSON.parse(localStorage.getItem('users'));
+                const user = users.find(u => u.username === currentUser);
+                user.savedImages.push(ev.target.result);
+                localStorage.setItem('users', JSON.stringify(users));
+                loadAllImages();
+            };
+            reader.readAsDataURL(file);
+        });
+
+        loadAllImages();
+    </script>
+    <script src="shared.js"></script>
+</body>
+</html>

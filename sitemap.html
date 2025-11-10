@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Map - LifeStyle Guide</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .sitemap-container {
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 50px 40px;
+            border-radius: 30px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+            max-width: 800px;
+            margin: 50px auto;
+            text-align: center;
+        }
+        .sitemap-title {
+            color: white;
+            font-size: 3.5em;
+            margin-bottom: 40px;
+            text-shadow: 0 0 30px rgba(102, 126, 234, 0.9);
+            font-weight: 800;
+        }
+        .sitemap-list {
+            list-style: none;
+            padding: 0;
+        }
+        .sitemap-list li {
+            margin: 25px 0;
+        }
+        .sitemap-list a {
+            color: #e0f7fa;
+            text-decoration: none;
+            font-size: 1.6em;
+            font-weight: bold;
+            padding: 18px 40px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            display: block;
+            transition: all 0.4s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        .sitemap-list a:hover {
+            background: rgba(102, 126, 234, 0.6);
+            color: white;
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.5);
+        }
+        .sitemap-list a::before {
+            content: "→ ";
+            font-size: 1.8em;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <header><h1>LifeStyle Guide</h1></header>
+    <nav><ul id="navList"></ul></nav>
+
+    <div class="sitemap-container">
+        <h2 class="sitemap-title">Site Map</h2>
+        <ul class="sitemap-list">
+            <li><a href="index.html">Home – Welcome Dashboard</a></li>
+            <li><a href="gallery.html">Gallery – All Your Images + Recipe Photos</a></li>
+            <li><a href="recipes.html">Recipes – Post & View with Images</a></li>
+            <li><a href="profile.html">Profile – Your Stats & Settings (Coming Soon)</a></li>
+            <li><a href="login.html">Login – Secure Access</a></li>
+            <li><a href="register.html">Register – Create Account</a></li>
+            <li><a href="sitemap.html">Site Map – You are here!</a></li>
+        </ul>
+    </div>
+
+    <script src="shared.js"></script>
+</body>
+</html>

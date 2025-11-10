@@ -1,0 +1,53 @@
+IF localStorage.users does not exist
+    SET localStorage.users to empty array
+
+FUNCTION registerUser(event)
+    PREVENT default form submission
+    GET form inputs: firstName, lastName, username, email, password, confirmPassword, gender, address, phone
+    IF any required field is empty
+        ALERT "All fields are required"
+        RETURN
+    IF password != confirmPassword
+        ALERT "Passwords do not match"
+        RETURN
+    IF email is not valid format
+        ALERT "Invalid email"
+        RETURN
+    PARSE users from localStorage
+    FOR each user in users
+        IF username matches existing OR email matches existing
+            ALERT "Username or email already exists"
+            RETURN
+    CREATE new user object with all fields
+    PUSH new user to users array
+    STRINGIFY and SET localStorage.users
+    ALERT "Registration successful"
+    RESET form
+FUNCTION loginUser(event)
+    PREVENT default form submission
+    GET login inputs: username, password
+    IF username or password empty
+        ALERT "Fields required"
+        RETURN
+    PARSE users from localStorage
+    FOR each user in users
+        IF username matches AND password matches
+            SET localStorage.currentUser to username
+            ALERT "Login successful"
+            REDIRECT to home or refresh page
+            RETURN
+    ALERT "Invalid credentials"
+
+FUNCTION logoutUser()
+    REMOVE localStorage.currentUser
+    ALERT "Logged out"
+    REFRESH page
+
+ON page load
+    ADD event listener to registration form submit: registerUser
+    ADD event listener to login form submit: loginUser
+    ADD event listener to logout button: logoutUser
+    IF currentUser exists
+        SHOW logged-in UI (e.g., hide login/register, show logout and user-specific content)
+    ELSE
+        SHOW login/register UI

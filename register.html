@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - LifeStyle Guide</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .form-container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 50px 40px;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 480px;
+            margin: 40px auto;
+        }
+        .form-title {
+            text-align: center;
+            color: white;
+            font-size: 2.8em;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(102, 126, 234, 0.8);
+            font-weight: 700;
+        }
+        .input-group {
+            position: relative;
+            margin: 25px 0;
+        }
+        .input-field {
+            width: 100%;
+            padding: 18px 20px;
+            border: none;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            color: white;
+            font-size: 1.1em;
+            outline: none;
+            transition: all 0.3s;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        .input-field::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .input-field:focus {
+            background: rgba(255, 255, 255, 0.35);
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.6);
+            transform: scale(1.02);
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.4s;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        .submit-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.6);
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 30px;
+            color: white;
+            font-size: 1.1em;
+        }
+        .login-link a {
+            color: #a0d8ff;
+            text-decoration: none;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(160, 216, 255, 0.8);
+        }
+        .login-link a:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <header><h1>LifeStyle Guide</h1></header>
+    <nav><ul id="navList"></ul></nav>
+
+    <div class="form-container">
+        <h2 class="form-title">Create Account</h2>
+        <form id="regForm">
+            <div class="input-group">
+                <input type="text" id="firstName" class="input-field" placeholder="First Name" required>
+            </div>
+            <div class="input-group">
+                <input type="text" id="lastName" class="input-field" placeholder="Last Name" required>
+            </div>
+            <div class="input-group">
+                <input type="text" id="username" class="input-field" placeholder="Username" required>
+            </div>
+            <div class="input-group">
+                <input type="email" id="email" class="input-field" placeholder="Email" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" class="input-field" placeholder="Password" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="confirmPassword" class="input-field" placeholder="Confirm Password" required>
+            </div>
+            <button type="submit" class="submit-btn">Register</button>
+        </form>
+        <div class="login-link">
+            Already have an account? <a href="login.html">Login here</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('regForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const data = {
+                username: document.getElementById('username').value.trim(),
+                password: document.getElementById('password').value,
+                firstName: document.getElementById('firstName').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                savedImages: [],
+                savedRecipes: []
+            };
+            if (data.password !== document.getElementById('confirmPassword').value) {
+                return alert('Passwords do not match!');
+            }
+            let users = JSON.parse(localStorage.getItem('users') || '[]');
+            if (users.find(u => u.username === data.username)) {
+                return alert('Username already exists!');
+            }
+            users.push(data);
+            localStorage.setItem('users', JSON.stringify(users));
+            alert('Registered successfully! Now login.');
+            window.location.href = 'login.html';
+        });
+    </script>
+    <script src="shared.js"></script>
+</body>
+</html>
